@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Net.ServerSentEvents" />
+      <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.7" />
     </ItemGroup>
 
 </Project>
