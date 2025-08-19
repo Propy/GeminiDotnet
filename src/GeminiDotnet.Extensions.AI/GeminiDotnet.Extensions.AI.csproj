@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <IsAotCompatible>true</IsAotCompatible>
+        <TargetFramework>net9.0</TargetFramework>
         <IsPackable>true</IsPackable>
         <PackageId>GeminiDotnet.Extensions.AI</PackageId>
         <Version>0.14.1</Version>
