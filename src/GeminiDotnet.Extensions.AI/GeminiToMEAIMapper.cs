@@ -19,7 +19,7 @@ internal static class GeminiToMEAIMapper
         {
             AuthorName = null,
             Role = CreateMappedChatRole(candidate.Content.Role),
-            Contents = candidate.Content.Parts.Select(CreateMappedAIContent).ToList(),
+            Contents = candidate.Content?.Parts?.Select(CreateMappedAIContent)?.ToList() ?? new List<AIContent>(),
             RawRepresentation = response,
             AdditionalProperties = null,
             ResponseId = null,
@@ -194,7 +194,7 @@ internal static class GeminiToMEAIMapper
             {
                 AuthorName = null,
                 Role = CreateMappedChatRole(candidateResponse.Content.Role),
-                Contents = candidateResponse.Content.Parts.Select(CreateMappedAIContent).ToList(),
+                Contents = candidateResponse?.Content?.Parts?.Select(CreateMappedAIContent).ToList() ?? new List<AIContent>(),
                 RawRepresentation = candidateResponse,
                 AdditionalProperties = null
             };

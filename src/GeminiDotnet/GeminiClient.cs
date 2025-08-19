@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 
@@ -106,9 +107,17 @@ public sealed class GeminiClient
 
         static GenerateContentResponse ParseSseItem(string eventType, ReadOnlySpan<byte> data)
         {
-            var typeInfo = JsonContext.Default.GetTypeInfo<GenerateContentResponse>();
-            var response = JsonSerializer.Deserialize(data, typeInfo);
-            return response!;
+            try
+            {
+                var typeInfo = JsonContext.Default.GetTypeInfo<GenerateContentResponse>();
+                var response = JsonSerializer.Deserialize(data, typeInfo);
+                return response!;
+            }
+            catch (Exception ex)
+            {
+                string dataStr = Encoding.UTF8.GetString(data);
+                throw new JsonException($"Failed to parse SSE item data: {dataStr}", ex);
+            }
         }
     }
 
