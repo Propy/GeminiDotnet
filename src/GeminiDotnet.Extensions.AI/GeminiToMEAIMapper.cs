@@ -70,7 +70,7 @@ internal static class GeminiToMEAIMapper
 
         if (messagePart.FunctionCall is not null)
         {
-            return CreateMappedFunctionCallContent(messagePart.FunctionCall);
+            return CreateMappedFunctionCallContent(messagePart.FunctionCall, messagePart.ThoughtSignature!);
         }
 
         if (messagePart.FunctionResponse is not null)
@@ -124,7 +124,7 @@ internal static class GeminiToMEAIMapper
             return new TextContent(part.Text) { RawRepresentation = part };
         }
 
-        static FunctionCallContent CreateMappedFunctionCallContent(FunctionCall functionCall)
+        static FunctionCallContent CreateMappedFunctionCallContent(FunctionCall functionCall, string thoughtSignature)
         {
             var callId = functionCall.Id ?? $"{functionCall.Name}/{Guid.NewGuid()}";
 
@@ -133,7 +133,11 @@ internal static class GeminiToMEAIMapper
 
             return new FunctionCallContent(callId, functionCall.Name, args)
             {
-                RawRepresentation = functionCall, AdditionalProperties = null
+                RawRepresentation = functionCall, 
+                AdditionalProperties = new AdditionalPropertiesDictionary
+                {
+                    { "ThoughtSignature", thoughtSignature }
+                }
             };
         }
 

@@ -275,8 +275,9 @@ internal static class MEAIToGeminiMapper
                     {
                         Id = functionCall.CallId,
                         Name = functionCall.Name,
-                        Arguments = arguments
-                    }
+                        Arguments = arguments,
+                    },
+                    ThoughtSignature = functionCall.AdditionalProperties?["ThoughtSignature"] as string,
                 };
             }
 
